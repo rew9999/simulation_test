@@ -1,0 +1,47 @@
+/* Email Verification Page */
+.auth-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.verification-notice {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.verification-notice p {
+    margin-bottom: 10px;
+}
+
+.verification-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.logout-form {
+    text-align: center;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.alert--success {
+    background: #e8f5e9;
+    border: 1px solid #4caf50;
+    color: #2e7d32;
+}

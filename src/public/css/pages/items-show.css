@@ -1,0 +1,121 @@
+/* Item Detail Page (商品詳細) */
+.item-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.item-detail__image {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.item-detail__name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.item-detail__brand {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.item-detail__price {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff5555;
+    margin-bottom: 20px;
+}
+
+.item-detail__actions {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+}
+
+.action-btn--liked {
+    color: #ff5555;
+}
+
+.item-detail__purchase {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 30px;
+}
+
+.item-detail__section {
+    margin-bottom: 20px;
+}
+
+.item-detail__section h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.item-detail__categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.category-tag {
+    background: #f0f0f0;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* Comments Section */
+.comments-section {
+    margin-top: 30px;
+}
+
+.comment {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+
+.comment__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ddd;
+}
+
+.comment__content {
+    flex: 1;
+}
+
+.comment__user {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}

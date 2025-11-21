@@ -1,0 +1,22 @@
+/* Authentication Pages (Login, Register) */
+.auth-form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 50px auto;
+}
+
+.auth-form h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.auth-link a {
+    color: #ff5555;
+}

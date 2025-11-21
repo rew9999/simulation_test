@@ -1,0 +1,8 @@
+/* Address Change Page (住所変更) */
+.address-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+}

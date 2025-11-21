@@ -1,0 +1,124 @@
+/* Profile Pages (マイページ・プロフィール設定) */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #ddd;
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-form {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.avatar-upload {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.avatar-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #ddd;
+    overflow: hidden;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Tabs for mypage (出品した商品 / 購入した商品) */
+.tabs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ddd;
+}
+
+.tab {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #666;
+    font-weight: bold;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+}
+
+.tab--active {
+    color: #ff5555;
+    border-bottom-color: #ff5555;
+}
+
+/* Items grid for profile page */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.item-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.item-card:hover {
+    transform: translateY(-4px);
+}
+
+.item-card__link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.item-card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.item-card__info {
+    padding: 15px;
+}
+
+.item-card__name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
