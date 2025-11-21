@@ -1,42 +1,5 @@
 # COACHTECHフリマ
 
-COACHTECHフリマは、ユーザー間で商品の売買ができるフリーマーケットアプリケーションです。
-
-![トップページ](docs/images/top-page.png)
-
-## 作成した目的
-
-模擬案件を通じて、実務に近い開発経験を積むために作成しました。
-
-## アプリケーションURL
-
-- 開発環境: http://localhost
-- phpMyAdmin: http://localhost:8080
-- MailHog: http://localhost:8025
-
-## 機能一覧
-
-### 基本機能
-- 会員登録
-- ログイン/ログアウト
-- メール認証（応用機能）
-- 商品一覧表示
-- 商品詳細表示
-- 商品検索（キーワード検索）
-- お気に入り機能
-- コメント機能
-- マイリスト表示
-- マイページ表示（出品商品・購入商品）
-- プロフィール編集
-- 商品出品
-- 商品購入
-- 住所変更
-- Stripe決済連携（応用機能）
-
-### 支払い方法
-- コンビニ払い
-- カード支払い（Stripe）
-
 ## 使用技術（実行環境）
 
 - PHP 8.2
@@ -150,7 +113,7 @@ erDiagram
 
 1. リポジトリのクローン
 ```bash
-git clone <repository-url>
+git clone git@github.com:rew9999/simulation_test.git
 cd simulation_test
 ```
 
