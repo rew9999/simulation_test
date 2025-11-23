@@ -6,10 +6,9 @@ use App\Http\Requests\AddressRequest;
 use App\Http\Requests\PurchaseRequest;
 use App\Models\Item;
 use App\Models\Purchase;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Stripe\Stripe;
 use Stripe\Checkout\Session as StripeSession;
+use Stripe\Stripe;
 
 class PurchaseController extends Controller
 {
@@ -87,7 +86,7 @@ class PurchaseController extends Controller
         $address = session('purchase_address');
         $building = session('purchase_building');
 
-        if (!$paymentMethod) {
+        if (! $paymentMethod) {
             return redirect()->route('items.index')->with('error', '購入情報が見つかりません。');
         }
 

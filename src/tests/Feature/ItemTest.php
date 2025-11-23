@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Category;
-use App\Models\Comment;
 use App\Models\Item;
 use App\Models\Like;
 use App\Models\User;
@@ -72,7 +71,7 @@ class ItemTest extends TestCase
         $user = User::factory()->create();
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->get('/item/' . $item->id);
+        $response = $this->actingAs($user)->get('/item/'.$item->id);
 
         $response->assertStatus(200);
         $response->assertViewIs('items.show');
@@ -83,7 +82,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $response = $this->get('/item/' . $item->id);
+        $response = $this->get('/item/'.$item->id);
 
         $response->assertStatus(200);
         $response->assertViewIs('items.show');
@@ -95,7 +94,7 @@ class ItemTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/item/' . $item->id . '/like');
+        $response = $this->actingAs($user)->post('/item/'.$item->id.'/like');
 
         $response->assertStatus(302);
         $this->assertDatabaseHas('likes', [
@@ -114,7 +113,7 @@ class ItemTest extends TestCase
             'item_id' => $item->id,
         ]);
 
-        $response = $this->actingAs($user)->post('/item/' . $item->id . '/like');
+        $response = $this->actingAs($user)->post('/item/'.$item->id.'/like');
 
         $response->assertStatus(302);
         $this->assertDatabaseMissing('likes', [
@@ -127,7 +126,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $response = $this->post('/item/' . $item->id . '/like');
+        $response = $this->post('/item/'.$item->id.'/like');
 
         $response->assertStatus(302);
         $response->assertRedirect('/login');
@@ -138,7 +137,7 @@ class ItemTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/item/' . $item->id . '/comment', [
+        $response = $this->actingAs($user)->post('/item/'.$item->id.'/comment', [
             'content' => 'これはテストコメントです',
         ]);
 
@@ -154,7 +153,7 @@ class ItemTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $response = $this->post('/item/' . $item->id . '/comment', [
+        $response = $this->post('/item/'.$item->id.'/comment', [
             'content' => 'これはテストコメントです',
         ]);
 
@@ -167,7 +166,7 @@ class ItemTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/item/' . $item->id . '/comment', [
+        $response = $this->actingAs($user)->post('/item/'.$item->id.'/comment', [
             'content' => '',
         ]);
 
@@ -179,7 +178,7 @@ class ItemTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/item/' . $item->id . '/comment', [
+        $response = $this->actingAs($user)->post('/item/'.$item->id.'/comment', [
             'content' => str_repeat('あ', 256),
         ]);
 

@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Http\Requests\ItemRequest;
-use App\Models\Item;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Item;
 use App\Models\Like;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class ItemController extends Controller
         $query = Item::query();
 
         if ($keyword) {
-            $query->where('name', 'like', '%' . $keyword . '%');
+            $query->where('name', 'like', '%'.$keyword.'%');
         }
 
         if ($tab === 'mylist' && Auth::check()) {

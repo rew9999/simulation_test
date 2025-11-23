@@ -17,7 +17,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->get('/purchase/' . $item->id);
+        $response = $this->actingAs($user)->get('/purchase/'.$item->id);
 
         $response->assertStatus(200);
         $response->assertViewIs('purchases.show');
@@ -28,7 +28,7 @@ class PurchaseTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $response = $this->get('/purchase/' . $item->id);
+        $response = $this->get('/purchase/'.$item->id);
 
         $response->assertStatus(302);
         $response->assertRedirect('/login');
@@ -39,7 +39,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/'.$item->id, [
             'payment_method' => 'コンビニ払い',
             'postal_code' => '123-4567',
             'address' => '東京都渋谷区道玄坂1-2-3',
@@ -64,7 +64,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/'.$item->id, [
             'payment_method' => '',
             'postal_code' => '123-4567',
             'address' => '東京都渋谷区道玄坂1-2-3',
@@ -79,7 +79,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/'.$item->id, [
             'payment_method' => 'コンビニ払い',
             'postal_code' => '',
             'address' => '東京都渋谷区道玄坂1-2-3',
@@ -94,7 +94,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/'.$item->id, [
             'payment_method' => 'コンビニ払い',
             'postal_code' => '123-4567',
             'address' => '',
@@ -109,7 +109,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/'.$item->id, [
             'payment_method' => 'コンビニ払い',
             'postal_code' => '123-4567',
             'address' => '東京都渋谷区道玄坂1-2-3',
@@ -141,7 +141,7 @@ class PurchaseTest extends TestCase
             'building' => 'テストビル101',
         ]);
 
-        $response = $this->actingAs($user)->post('/purchase/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/'.$item->id, [
             'payment_method' => 'コンビニ払い',
             'postal_code' => '123-4567',
             'address' => '東京都渋谷区道玄坂1-2-3',
@@ -156,7 +156,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->get('/purchase/address/' . $item->id);
+        $response = $this->actingAs($user)->get('/purchase/address/'.$item->id);
 
         $response->assertStatus(200);
         $response->assertViewIs('purchases.address');
@@ -166,7 +166,7 @@ class PurchaseTest extends TestCase
     {
         $item = Item::factory()->create();
 
-        $response = $this->get('/purchase/address/' . $item->id);
+        $response = $this->get('/purchase/address/'.$item->id);
 
         $response->assertStatus(302);
         $response->assertRedirect('/login');
@@ -177,14 +177,14 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/address/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/address/'.$item->id, [
             'postal_code' => '999-8888',
             'address' => '大阪府大阪市北区梅田1-1-1',
             'building' => '梅田ビル5F',
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/purchase/' . $item->id);
+        $response->assertRedirect('/purchase/'.$item->id);
         $response->assertSessionHas(['postal_code', 'address', 'building']);
     }
 
@@ -193,7 +193,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/address/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/address/'.$item->id, [
             'postal_code' => '',
             'address' => '大阪府大阪市北区梅田1-1-1',
             'building' => '梅田ビル5F',
@@ -207,7 +207,7 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/address/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/address/'.$item->id, [
             'postal_code' => '999-8888',
             'address' => '',
             'building' => '梅田ビル5F',
@@ -221,13 +221,13 @@ class PurchaseTest extends TestCase
         $user = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create();
 
-        $response = $this->actingAs($user)->post('/purchase/address/' . $item->id, [
+        $response = $this->actingAs($user)->post('/purchase/address/'.$item->id, [
             'postal_code' => '999-8888',
             'address' => '大阪府大阪市北区梅田1-1-1',
             'building' => null,
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('/purchase/' . $item->id);
+        $response->assertRedirect('/purchase/'.$item->id);
     }
 }
