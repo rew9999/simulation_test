@@ -82,6 +82,8 @@ jobs:
         run: |
           sed -i 's/DB_HOST=db/DB_HOST=127.0.0.1/' .env
           sed -i 's/DB_CONNECTION=musql/DB_CONNECTION=mysql/' .env
+          sed -i 's/DB_USERNAME=laravel_user/DB_USERNAME=phper/' .env
+          sed -i 's/DB_PASSWORD=laravel_pass/DB_PASSWORD=secret/' .env
 
       - name: Run database migrations
         working-directory: src
