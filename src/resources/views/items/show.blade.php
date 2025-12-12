@@ -23,18 +23,18 @@
                     <form action="{{ route('items.like', $item->id) }}" method="POST">
                         @csrf
                         <button type="submit" class="action-btn {{ $isLiked ? 'action-btn--liked' : '' }}">
-                            <span style="font-size: 24px;">{{ $isLiked ? '★' : '☆' }}</span>
+                            <span class="icon-large">{{ $isLiked ? '★' : '☆' }}</span>
                             <span>{{ $likesCount }}</span>
                         </button>
                     </form>
                 @else
                     <div class="action-btn">
-                        <span style="font-size: 24px;">☆</span>
+                        <span class="icon-large">☆</span>
                         <span>{{ $likesCount }}</span>
                     </div>
                 @endauth
                 <div class="action-btn">
-                    <span style="font-size: 24px;">💬</span>
+                    <span class="icon-large">💬</span>
                     <span>{{ $commentsCount }}</span>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         <span class="category-tag">{{ $category->name }}</span>
                     @endforeach
                 </div>
-                <div style="margin-top: 10px;">
+                <div class="margin-top-10">
                     <strong>商品の状態：</strong>{{ $item->condition }}
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     <div class="comment">
                         <div class="comment__avatar">
                             @if($comment->user->profile_image)
-                                <img src="{{ asset('storage/' . $comment->user->profile_image) }}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                                <img src="{{ asset('storage/' . $comment->user->profile_image) }}" class="avatar-img-full">
                             @endif
                         </div>
                         <div class="comment__content">

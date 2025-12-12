@@ -31,7 +31,7 @@
             <img id="image-preview" class="image-preview" src="" alt="プレビュー">
         </div>
 
-        <h3 style="margin-bottom: 20px;">商品の詳細</h3>
+        <h3 class="section-title">商品の詳細</h3>
 
         <div class="form-group">
             <label>カテゴリー</label>
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <h3 style="margin-bottom: 20px;">商品名と説明</h3>
+        <h3 class="section-title">商品名と説明</h3>
 
         <div class="form-group">
             <label for="name">商品名</label>

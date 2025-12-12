@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ItemController extends Controller
 {
+    private const CONDITIONS = [
+        '良好',
+        '目立った傷や汚れなし',
+        'やや傷や汚れあり',
+        '状態が悪い',
+    ];
+
     public function index(Request $request)
     {
         $tab = $request->get('tab', 'recommend');
@@ -81,7 +88,7 @@ class ItemController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $conditions = ['良好', '目立った傷や汚れなし', 'やや傷や汚れあり', '状態が悪い'];
+        $conditions = self::CONDITIONS;
 
         return view('items.create', compact('categories', 'conditions'));
     }

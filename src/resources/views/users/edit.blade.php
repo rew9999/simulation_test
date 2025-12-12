@@ -27,12 +27,12 @@
                 @if($user->profile_image)
                     <img src="{{ asset('storage/' . $user->profile_image) }}" alt="{{ $user->name }}" id="avatar-img">
                 @else
-                    <img src="" alt="" id="avatar-img" style="display: none;">
+                    <img src="" alt="" id="avatar-img" class="avatar-preview">
                 @endif
             </div>
             <div>
                 <input type="file" id="profile_image" name="profile_image" accept="image/*">
-                <p style="color: #666; font-size: 12px; margin-top: 5px;">画像を選択してください</p>
+                <p class="helper-text">画像を選択してください</p>
             </div>
         </div>
 

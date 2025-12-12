@@ -18,7 +18,7 @@
 
         <nav class="header__nav">
             @auth
-                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                <form action="{{ route('logout') }}" method="POST" class="inline-form">
                     @csrf
                     <button type="submit">ログアウト</button>
                 </form>

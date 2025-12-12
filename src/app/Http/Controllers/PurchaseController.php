@@ -12,6 +12,38 @@ use Stripe\Stripe;
 
 class PurchaseController extends Controller
 {
+    private const PAYMENT_METHOD_CARD = 'カード支払い';
+    private const PAYMENT_METHOD_CONVENIENCE = 'コンビニ払い';
+
+    private const SESSION_ITEM_ID = 'purchase_item_id';
+    private const SESSION_PAYMENT_METHOD = 'purchase_payment_method';
+    private const SESSION_POSTAL_CODE = 'purchase_postal_code';
+    private const SESSION_ADDRESS = 'purchase_address';
+    private const SESSION_BUILDING = 'purchase_building';
+
+    private function createPurchase($itemId, $paymentMethod, $postalCode, $address, $building)
+    {
+        return Purchase::create([
+            'user_id' => Auth::id(),
+            'item_id' => $itemId,
+            'payment_method' => $paymentMethod,
+            'postal_code' => $postalCode,
+            'address' => $address,
+            'building' => $building,
+        ]);
+    }
+
+    private function clearPurchaseSession()
+    {
+        session()->forget([
+            self::SESSION_ITEM_ID,
+            self::SESSION_PAYMENT_METHOD,
+            self::SESSION_POSTAL_CODE,
+            self::SESSION_ADDRESS,
+            self::SESSION_BUILDING,
+        ]);
+    }
+
     public function show($id)
     {
         $item = Item::findOrFail($id);
@@ -29,14 +61,14 @@ class PurchaseController extends Controller
         }
 
         session([
-            'purchase_item_id' => $id,
-            'purchase_payment_method' => $request->payment_method,
-            'purchase_postal_code' => $request->postal_code,
-            'purchase_address' => $request->address,
-            'purchase_building' => $request->building,
+            self::SESSION_ITEM_ID => $id,
+            self::SESSION_PAYMENT_METHOD => $request->payment_method,
+            self::SESSION_POSTAL_CODE => $request->postal_code,
+            self::SESSION_ADDRESS => $request->address,
+            self::SESSION_BUILDING => $request->building,
         ]);
 
-        if ($request->payment_method === 'カード支払い') {
+        if ($request->payment_method === self::PAYMENT_METHOD_CARD) {
             Stripe::setApiKey(config('stripe.secret'));
 
             $session = StripeSession::create([
@@ -59,16 +91,15 @@ class PurchaseController extends Controller
             return redirect($session->url);
         }
 
-        Purchase::create([
-            'user_id' => Auth::id(),
-            'item_id' => $id,
-            'payment_method' => $request->payment_method,
-            'postal_code' => $request->postal_code,
-            'address' => $request->address,
-            'building' => $request->building,
-        ]);
+        $this->createPurchase(
+            $id,
+            $request->payment_method,
+            $request->postal_code,
+            $request->address,
+            $request->building
+        );
 
-        session()->forget(['purchase_item_id', 'purchase_payment_method', 'purchase_postal_code', 'purchase_address', 'purchase_building']);
+        $this->clearPurchaseSession();
 
         return redirect()->route('items.index')->with('success', '購入が完了しました。');
     }
@@ -81,25 +112,24 @@ class PurchaseController extends Controller
             return redirect()->route('items.index')->with('error', 'この商品はすでに購入されています。');
         }
 
-        $paymentMethod = session('purchase_payment_method');
-        $postalCode = session('purchase_postal_code');
-        $address = session('purchase_address');
-        $building = session('purchase_building');
+        $paymentMethod = session(self::SESSION_PAYMENT_METHOD);
+        $postalCode = session(self::SESSION_POSTAL_CODE);
+        $address = session(self::SESSION_ADDRESS);
+        $building = session(self::SESSION_BUILDING);
 
         if (! $paymentMethod) {
             return redirect()->route('items.index')->with('error', '購入情報が見つかりません。');
         }
 
-        Purchase::create([
-            'user_id' => Auth::id(),
-            'item_id' => $id,
-            'payment_method' => $paymentMethod,
-            'postal_code' => $postalCode,
-            'address' => $address,
-            'building' => $building,
-        ]);
+        $this->createPurchase(
+            $id,
+            $paymentMethod,
+            $postalCode,
+            $address,
+            $building
+        );
 
-        session()->forget(['purchase_item_id', 'purchase_payment_method', 'purchase_postal_code', 'purchase_address', 'purchase_building']);
+        $this->clearPurchaseSession();
 
         return redirect()->route('items.index')->with('success', '購入が完了しました。');
     }

@@ -15,10 +15,11 @@ class UserController extends Controller
 
         if ($tab === 'sell') {
             $items = $user->items;
-        } else {
-            $purchasedItemIds = $user->purchases->pluck('item_id');
-            $items = \App\Models\Item::whereIn('id', $purchasedItemIds)->get();
+            return view('users.show', compact('user', 'items', 'tab'));
         }
+
+        $purchasedItemIds = $user->purchases->pluck('item_id');
+        $items = \App\Models\Item::whereIn('id', $purchasedItemIds)->get();
 
         return view('users.show', compact('user', 'items', 'tab'));
     }

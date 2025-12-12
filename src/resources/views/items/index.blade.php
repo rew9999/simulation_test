@@ -20,7 +20,7 @@
         @foreach($items as $item)
             <div class="item-card">
                 <a href="{{ route('items.show', $item->id) }}" class="item-card__link">
-                    <div style="position: relative;">
+                    <div class="relative-container">
                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="item-card__image">
                         @if($item->purchase)
                             <div class="item-card__sold">Sold</div>
