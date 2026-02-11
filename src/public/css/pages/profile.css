@@ -122,3 +122,62 @@
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+/* Star rating on profile */
+.profile-rating {
+    display: flex;
+    gap: 3px;
+    margin-top: 5px;
+}
+
+.star {
+    color: #ddd;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.star--filled {
+    color: #ff5555;
+}
+
+/* Tab badge for unread count */
+.tab__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ff5555;
+    color: #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* Item card image wrapper for notification badge */
+.item-card__image-wrapper {
+    position: relative;
+}
+
+.item-card__image-wrapper .item-card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Notification badge on item card (FN005) */
+.item-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #ff5555;
+    color: #fff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}

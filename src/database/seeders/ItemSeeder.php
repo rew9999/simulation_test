@@ -11,9 +11,10 @@ class ItemSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::first();
+        $user1 = User::where('email', 'test@example.com')->first();
+        $user2 = User::where('email', 'yamada@example.com')->first();
 
-        $items = [
+        $itemsUser1 = [
             [
                 'name' => '腕時計',
                 'price' => 15000,
@@ -54,6 +55,9 @@ class ItemSeeder extends Seeder
                 'condition' => '良好',
                 'categories' => ['家電'],
             ],
+        ];
+
+        $itemsUser2 = [
             [
                 'name' => 'マイク',
                 'price' => 8000,
@@ -96,11 +100,22 @@ class ItemSeeder extends Seeder
             ],
         ];
 
-        foreach ($items as $itemData) {
+        foreach ($itemsUser1 as $itemData) {
             $categories = $itemData['categories'];
             unset($itemData['categories']);
 
-            $itemData['user_id'] = $user->id;
+            $itemData['user_id'] = $user1->id;
+            $item = Item::create($itemData);
+
+            $categoryIds = Category::whereIn('name', $categories)->pluck('id');
+            $item->categories()->attach($categoryIds);
+        }
+
+        foreach ($itemsUser2 as $itemData) {
+            $categories = $itemData['categories'];
+            unset($itemData['categories']);
+
+            $itemData['user_id'] = $user2->id;
             $item = Item::create($itemData);
 
             $categoryIds = Category::whereIn('name', $categories)->pluck('id');

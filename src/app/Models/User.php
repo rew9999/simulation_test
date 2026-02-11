@@ -70,4 +70,26 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function ratingsReceived(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'rated_user_id');
+    }
+
+    public function ratingsGiven(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'rater_user_id');
+    }
+
+    public function getAverageRatingAttribute(): ?int
+    {
+        $avg = $this->ratingsReceived()->avg('rating');
+
+        return $avg ? (int) round($avg) : null;
+    }
 }
