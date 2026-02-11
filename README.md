@@ -66,6 +66,7 @@
 | postal_code | varchar(8) | NOT NULL | 配送先郵便番号 |
 | address | varchar(255) | NOT NULL | 配送先住所 |
 | building | varchar(255) | NULLABLE | 配送先建物名 |
+| status | varchar(255) | NOT NULL, DEFAULT '取引中' | 取引ステータス |
 | created_at | timestamp | - | 作成日時 |
 | updated_at | timestamp | - | 更新日時 |
 
@@ -88,6 +89,29 @@
 | created_at | timestamp | - | 作成日時 |
 | updated_at | timestamp | - | 更新日時 |
 
+### messagesテーブル
+| カラム名 | 型 | 制約 | 説明 |
+|---------|-----|------|------|
+| id | bigint unsigned | PRIMARY KEY | メッセージID |
+| user_id | bigint unsigned | FOREIGN KEY, NOT NULL | 送信者ID |
+| purchase_id | bigint unsigned | FOREIGN KEY, NOT NULL | 取引ID |
+| content | varchar(400) | NOT NULL | メッセージ本文 |
+| image | varchar(255) | NULLABLE | 添付画像 |
+| is_read | boolean | NOT NULL, DEFAULT false | 既読フラグ |
+| created_at | timestamp | - | 作成日時 |
+| updated_at | timestamp | - | 更新日時 |
+
+### ratingsテーブル
+| カラム名 | 型 | 制約 | 説明 |
+|---------|-----|------|------|
+| id | bigint unsigned | PRIMARY KEY | 評価ID |
+| purchase_id | bigint unsigned | FOREIGN KEY, NOT NULL | 取引ID |
+| rater_user_id | bigint unsigned | FOREIGN KEY, NOT NULL | 評価者ID |
+| rated_user_id | bigint unsigned | FOREIGN KEY, NOT NULL | 被評価者ID |
+| rating | tinyint unsigned | NOT NULL | 評価（1〜5） |
+| created_at | timestamp | - | 作成日時 |
+| updated_at | timestamp | - | 更新日時 |
+
 ## ER図
 
 ```mermaid
@@ -96,11 +120,15 @@ erDiagram
     users ||--o{ purchases : "購入"
     users ||--o{ likes : "いいね"
     users ||--o{ comments : "コメント"
+    users ||--o{ messages : "送信"
+    users ||--o{ ratings : "評価"
     items ||--o{ category_item : "カテゴリ関連"
     categories ||--o{ category_item : "商品関連"
     items ||--o| purchases : "購入される"
     items ||--o{ likes : "いいねされる"
     items ||--o{ comments : "コメントされる"
+    purchases ||--o{ messages : "チャット"
+    purchases ||--o{ ratings : "取引評価"
 ```
 
 ## 環境構築
@@ -187,8 +215,12 @@ STRIPE_SECRET=sk_test_xxxxxxxxxxxxx
 
 ### アカウントの種類（テストデータ）
 シーダー実行後、以下のテストユーザーが作成されます：
-- メールアドレス: test@example.com
-- パスワード: password
+
+| # | 名前 | メールアドレス | パスワード | 出品商品 |
+|---|------|---------------|-----------|---------|
+| 1 | テストユーザー | test@example.com | password | CO01〜CO05（腕時計, HDD, 玉ねぎ3束, 革靴, ノートPC） |
+| 2 | 山田太郎 | yamada@example.com | password | CO06〜CO10（マイク, ショルダーバッグ, タンブラー, コーヒーミル, メイクセット） |
+| 3 | 佐藤花子 | sato@example.com | password | なし |
 
 ### 注意事項
 - 本番環境では必ず環境変数を適切に設定してください

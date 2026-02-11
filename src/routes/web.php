@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,4 +25,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/mypage', [UserController::class, 'show'])->name('mypage');
     Route::get('/mypage/profile', [UserController::class, 'edit'])->name('mypage.edit');
     Route::post('/mypage/profile', [UserController::class, 'update'])->name('mypage.update');
+
+    Route::get('/transaction/{purchase_id}', [TransactionController::class, 'show'])->name('transaction.show');
+    Route::post('/transaction/{purchase_id}/message', [TransactionController::class, 'storeMessage'])->name('transaction.message.store');
+    Route::put('/transaction/message/{message_id}', [TransactionController::class, 'updateMessage'])->name('transaction.message.update');
+    Route::delete('/transaction/message/{message_id}', [TransactionController::class, 'deleteMessage'])->name('transaction.message.delete');
+    Route::post('/transaction/{purchase_id}/complete', [TransactionController::class, 'storeRating'])->name('transaction.complete');
+    Route::post('/transaction/{purchase_id}/draft', [TransactionController::class, 'saveDraft'])->name('transaction.draft');
 });
