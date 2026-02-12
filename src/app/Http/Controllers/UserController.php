@@ -42,7 +42,15 @@ class UserController extends Controller
             return view('users.show', compact('user', 'items', 'tab', 'totalUnread'));
         }
 
-        $purchases = Purchase::where('status', '取引中')
+        $purchases = Purchase::where(function ($query) use ($user) {
+            $query->where('status', '取引中')
+                ->orWhere(function ($q) use ($user) {
+                    $q->where('status', '完了')
+                        ->whereDoesntHave('ratings', function ($r) use ($user) {
+                            $r->where('rater_user_id', $user->id);
+                        });
+                });
+        })
             ->where(function ($query) use ($user) {
                 $query->where('user_id', $user->id)
                     ->orWhereHas('item', function ($q) use ($user) {

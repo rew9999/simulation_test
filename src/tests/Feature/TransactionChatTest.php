@@ -37,7 +37,7 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($buyer)->get('/transaction/'.$purchase->id);
 
         $response->assertStatus(200);
         $response->assertViewIs('transactions.chat');
@@ -47,7 +47,7 @@ class TransactionChatTest extends TestCase
     {
         ['seller' => $seller, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($seller)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($seller)->get('/transaction/'.$purchase->id);
 
         $response->assertStatus(200);
         $response->assertViewIs('transactions.chat');
@@ -57,7 +57,7 @@ class TransactionChatTest extends TestCase
     {
         ['purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->get('/transaction/' . $purchase->id);
+        $response = $this->get('/transaction/'.$purchase->id);
 
         $response->assertRedirect('/login');
     }
@@ -67,7 +67,7 @@ class TransactionChatTest extends TestCase
         ['purchase' => $purchase] = $this->createTransaction();
         $otherUser = User::factory()->create(['email_verified_at' => now()]);
 
-        $response = $this->actingAs($otherUser)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($otherUser)->get('/transaction/'.$purchase->id);
 
         $response->assertStatus(403);
     }
@@ -76,11 +76,11 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/message', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/message', [
             'content' => 'テストメッセージ',
         ]);
 
-        $response->assertRedirect('/transaction/' . $purchase->id);
+        $response->assertRedirect('/transaction/'.$purchase->id);
         $this->assertDatabaseHas('messages', [
             'user_id' => $buyer->id,
             'purchase_id' => $purchase->id,
@@ -92,11 +92,11 @@ class TransactionChatTest extends TestCase
     {
         ['seller' => $seller, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($seller)->post('/transaction/' . $purchase->id . '/message', [
+        $response = $this->actingAs($seller)->post('/transaction/'.$purchase->id.'/message', [
             'content' => '出品者からのメッセージ',
         ]);
 
-        $response->assertRedirect('/transaction/' . $purchase->id);
+        $response->assertRedirect('/transaction/'.$purchase->id);
         $this->assertDatabaseHas('messages', [
             'user_id' => $seller->id,
             'purchase_id' => $purchase->id,
@@ -108,7 +108,7 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/message', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/message', [
             'content' => '',
         ]);
 
@@ -119,7 +119,7 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/message', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/message', [
             'content' => str_repeat('あ', 401),
         ]);
 
@@ -130,7 +130,7 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/message', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/message', [
             'content' => str_repeat('あ', 400),
         ]);
 
@@ -146,12 +146,12 @@ class TransactionChatTest extends TestCase
         Storage::fake('public');
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/message', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/message', [
             'content' => '画像付きメッセージ',
             'image' => UploadedFile::fake()->create('test.png', 100, 'image/png'),
         ]);
 
-        $response->assertRedirect('/transaction/' . $purchase->id);
+        $response->assertRedirect('/transaction/'.$purchase->id);
         $message = Message::where('purchase_id', $purchase->id)->first();
         $this->assertNotNull($message->image);
     }
@@ -161,7 +161,7 @@ class TransactionChatTest extends TestCase
         Storage::fake('public');
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/message', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/message', [
             'content' => 'テスト',
             'image' => UploadedFile::fake()->create('test.gif', 100, 'image/gif'),
         ]);
@@ -178,11 +178,11 @@ class TransactionChatTest extends TestCase
             'content' => '元のメッセージ',
         ]);
 
-        $response = $this->actingAs($buyer)->put('/transaction/message/' . $message->id, [
+        $response = $this->actingAs($buyer)->put('/transaction/message/'.$message->id, [
             'content' => '編集後のメッセージ',
         ]);
 
-        $response->assertRedirect('/transaction/' . $purchase->id);
+        $response->assertRedirect('/transaction/'.$purchase->id);
         $this->assertDatabaseHas('messages', [
             'id' => $message->id,
             'content' => '編集後のメッセージ',
@@ -198,7 +198,7 @@ class TransactionChatTest extends TestCase
             'content' => '購入者のメッセージ',
         ]);
 
-        $response = $this->actingAs($seller)->put('/transaction/message/' . $message->id, [
+        $response = $this->actingAs($seller)->put('/transaction/message/'.$message->id, [
             'content' => '編集を試みる',
         ]);
 
@@ -218,9 +218,9 @@ class TransactionChatTest extends TestCase
             'content' => '削除するメッセージ',
         ]);
 
-        $response = $this->actingAs($buyer)->delete('/transaction/message/' . $message->id);
+        $response = $this->actingAs($buyer)->delete('/transaction/message/'.$message->id);
 
-        $response->assertRedirect('/transaction/' . $purchase->id);
+        $response->assertRedirect('/transaction/'.$purchase->id);
         $this->assertDatabaseMissing('messages', ['id' => $message->id]);
     }
 
@@ -233,7 +233,7 @@ class TransactionChatTest extends TestCase
             'content' => '購入者のメッセージ',
         ]);
 
-        $response = $this->actingAs($seller)->delete('/transaction/message/' . $message->id);
+        $response = $this->actingAs($seller)->delete('/transaction/message/'.$message->id);
 
         $response->assertStatus(403);
         $this->assertDatabaseHas('messages', ['id' => $message->id]);
@@ -249,7 +249,7 @@ class TransactionChatTest extends TestCase
             'is_read' => false,
         ]);
 
-        $this->actingAs($buyer)->get('/transaction/' . $purchase->id);
+        $this->actingAs($buyer)->get('/transaction/'.$purchase->id);
 
         $this->assertDatabaseHas('messages', [
             'purchase_id' => $purchase->id,
@@ -272,7 +272,7 @@ class TransactionChatTest extends TestCase
             'status' => '取引中',
         ]);
 
-        $response = $this->actingAs($buyer)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($buyer)->get('/transaction/'.$purchase->id);
 
         $response->assertSee($otherItem->name);
     }
@@ -281,7 +281,7 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/draft', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/draft', [
             'content' => '下書きテスト',
         ]);
 
@@ -292,11 +292,11 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/draft', [
+        $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/draft', [
             'content' => '下書き復元テスト',
         ]);
 
-        $response = $this->actingAs($buyer)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($buyer)->get('/transaction/'.$purchase->id);
 
         $response->assertSee('下書き復元テスト');
     }
@@ -305,15 +305,15 @@ class TransactionChatTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/draft', [
+        $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/draft', [
             'content' => '下書き',
         ]);
 
-        $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/message', [
+        $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/message', [
             'content' => '送信メッセージ',
         ]);
 
-        $response = $this->actingAs($buyer)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($buyer)->get('/transaction/'.$purchase->id);
 
         $response->assertDontSee('value="下書き"', false);
     }
