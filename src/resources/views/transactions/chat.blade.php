@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', '取引チャット')
+@section('no_search', true)
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/pages/chat.css') }}">
@@ -120,7 +121,7 @@
                 </div>
                 <label class="chat-form__file-label">
                     画像を追加
-                    <input type="file" name="image" accept=".jpeg,.jpg,.png" hidden id="chat-image-input">
+                    <input type="file" name="image" hidden id="chat-image-input">
                 </label>
                 <button type="submit" class="chat-form__send-btn">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -226,18 +227,43 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var chatInput = document.getElementById('chat-input');
+    var draftUrl = '{{ route("transaction.draft", $purchase->id) }}';
+    var csrfToken = '{{ csrf_token() }}';
+
+    function saveDraft(callback) {
+        var content = chatInput ? chatInput.value : '';
+        if (!content) {
+            if (callback) callback();
+            return;
+        }
+        fetch(draftUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ '_token': csrfToken, 'content': content }),
+            keepalive: true
+        }).then(function() {
+            if (callback) callback();
+        }).catch(function() {
+            if (callback) callback();
+        });
+    }
+
     if (chatInput) {
+        var sidebarLinks = document.querySelectorAll('.chat-sidebar__item');
+        sidebarLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (chatInput.value) {
+                    e.preventDefault();
+                    var href = this.href;
+                    saveDraft(function() {
+                        window.location.href = href;
+                    });
+                }
+            });
+        });
+
         window.addEventListener('beforeunload', function() {
-            var content = chatInput.value;
-            if (content) {
-                navigator.sendBeacon(
-                    '{{ route("transaction.draft", $purchase->id) }}',
-                    new URLSearchParams({
-                        '_token': '{{ csrf_token() }}',
-                        'content': content
-                    })
-                );
-            }
+            saveDraft();
         });
     }
 });

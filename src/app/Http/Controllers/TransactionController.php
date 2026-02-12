@@ -37,7 +37,15 @@ class TransactionController extends Controller
             ->where('is_read', false)
             ->update(['is_read' => true]);
 
-        $otherPurchases = Purchase::where('status', '取引中')
+        $otherPurchases = Purchase::where(function ($query) use ($user) {
+                $query->where('status', '取引中')
+                    ->orWhere(function ($q) use ($user) {
+                        $q->where('status', '完了')
+                            ->whereDoesntHave('ratings', function ($r) use ($user) {
+                                $r->where('rater_user_id', $user->id);
+                            });
+                    });
+            })
             ->where('id', '!=', $purchase->id)
             ->where(function ($query) use ($user) {
                 $query->where('user_id', $user->id)

@@ -12,9 +12,11 @@
     <header class="header">
         <a href="{{ route('items.index') }}" class="header__logo">COACHTECH</a>
 
-        <form class="header__search" action="{{ route('items.index') }}" method="GET">
-            <input type="text" name="keyword" placeholder="なにをお探しですか？" value="{{ request('keyword') }}">
-        </form>
+        @unless(View::hasSection('no_search'))
+            <form class="header__search" action="{{ route('items.index') }}" method="GET">
+                <input type="text" name="keyword" placeholder="なにをお探しですか？" value="{{ request('keyword') }}">
+            </form>
+        @endunless
 
         <nav class="header__nav">
             @auth

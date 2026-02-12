@@ -63,12 +63,12 @@ class TransactionMypageTest extends TestCase
         $response->assertSee($item->name);
     }
 
-    public function test_completed_transactions_not_shown_in_transaction_tab(): void
+    public function test_completed_unrated_transaction_shown_in_transaction_tab(): void
     {
         $seller = User::factory()->create(['email_verified_at' => now()]);
         $buyer = User::factory()->create(['email_verified_at' => now()]);
         $item = Item::factory()->create(['user_id' => $seller->id]);
-        Purchase::create([
+        $purchase = Purchase::create([
             'user_id' => $buyer->id,
             'item_id' => $item->id,
             'payment_method' => 'コンビニ払い',
@@ -78,7 +78,34 @@ class TransactionMypageTest extends TestCase
             'status' => '完了',
         ]);
 
-        $response = $this->actingAs($buyer)->get('/mypage?tab=transaction');
+        $response = $this->actingAs($seller)->get('/mypage?tab=transaction');
+
+        $response->assertSee($item->name);
+    }
+
+    public function test_completed_rated_transaction_not_shown_in_transaction_tab(): void
+    {
+        $seller = User::factory()->create(['email_verified_at' => now()]);
+        $buyer = User::factory()->create(['email_verified_at' => now()]);
+        $item = Item::factory()->create(['user_id' => $seller->id]);
+        $purchase = Purchase::create([
+            'user_id' => $buyer->id,
+            'item_id' => $item->id,
+            'payment_method' => 'コンビニ払い',
+            'postal_code' => '123-4567',
+            'address' => '東京都',
+            'building' => null,
+            'status' => '完了',
+        ]);
+
+        Rating::create([
+            'purchase_id' => $purchase->id,
+            'rater_user_id' => $seller->id,
+            'rated_user_id' => $buyer->id,
+            'rating' => 4,
+        ]);
+
+        $response = $this->actingAs($seller)->get('/mypage?tab=transaction');
 
         $response->assertDontSee($item->name);
     }
