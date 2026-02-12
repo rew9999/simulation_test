@@ -5,6 +5,16 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
+Route::get('/storage/{path}', function ($path) {
+    $disk = Storage::disk('public');
+    if (! $disk->exists($path)) {
+        abort(404);
+    }
+
+    return response()->file($disk->path($path));
+})->where('path', '.*')->name('storage.serve');
 
 Route::get('/', [ItemController::class, 'index'])->name('items.index');
 Route::get('/item/{id}', [ItemController::class, 'show'])->name('items.show');
