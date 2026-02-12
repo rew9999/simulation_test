@@ -13,12 +13,17 @@ use Stripe\Stripe;
 class PurchaseController extends Controller
 {
     private const PAYMENT_METHOD_CARD = 'カード支払い';
+
     private const PAYMENT_METHOD_CONVENIENCE = 'コンビニ払い';
 
     private const SESSION_ITEM_ID = 'purchase_item_id';
+
     private const SESSION_PAYMENT_METHOD = 'purchase_payment_method';
+
     private const SESSION_POSTAL_CODE = 'purchase_postal_code';
+
     private const SESSION_ADDRESS = 'purchase_address';
+
     private const SESSION_BUILDING = 'purchase_building';
 
     private function createPurchase($itemId, $paymentMethod, $postalCode, $address, $building)

@@ -15,7 +15,7 @@ class TransactionMypageTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function createTransaction(User $seller = null, User $buyer = null): array
+    private function createTransaction(?User $seller = null, ?User $buyer = null): array
     {
         $seller = $seller ?? User::factory()->create(['email_verified_at' => now()]);
         $buyer = $buyer ?? User::factory()->create(['email_verified_at' => now()]);
@@ -249,6 +249,6 @@ class TransactionMypageTest extends TestCase
 
         $response = $this->actingAs($buyer)->get('/mypage?tab=transaction');
 
-        $response->assertSee('/transaction/' . $purchase->id);
+        $response->assertSee('/transaction/'.$purchase->id);
     }
 }

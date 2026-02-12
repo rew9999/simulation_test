@@ -38,7 +38,7 @@ class TransactionRatingTest extends TestCase
         Mail::fake();
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 5,
         ]);
 
@@ -63,7 +63,7 @@ class TransactionRatingTest extends TestCase
             'rating' => 4,
         ]);
 
-        $response = $this->actingAs($seller)->post('/transaction/' . $purchase->id . '/complete', [
+        $response = $this->actingAs($seller)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 3,
         ]);
 
@@ -80,7 +80,7 @@ class TransactionRatingTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => '',
         ]);
 
@@ -91,7 +91,7 @@ class TransactionRatingTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 0,
         ]);
 
@@ -102,7 +102,7 @@ class TransactionRatingTest extends TestCase
     {
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 6,
         ]);
 
@@ -114,7 +114,7 @@ class TransactionRatingTest extends TestCase
         Mail::fake();
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 4,
         ]);
 
@@ -129,7 +129,7 @@ class TransactionRatingTest extends TestCase
         Mail::fake();
         ['seller' => $seller, 'buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 5,
         ]);
 
@@ -150,7 +150,7 @@ class TransactionRatingTest extends TestCase
             'rating' => 5,
         ]);
 
-        $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 3,
         ]);
 
@@ -172,7 +172,7 @@ class TransactionRatingTest extends TestCase
             'rating' => 4,
         ]);
 
-        $response = $this->actingAs($seller)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($seller)->get('/transaction/'.$purchase->id);
 
         $response->assertStatus(200);
         $response->assertViewHas('showRatingModal', true);
@@ -198,7 +198,7 @@ class TransactionRatingTest extends TestCase
             'rating' => 3,
         ]);
 
-        $response = $this->actingAs($seller)->get('/transaction/' . $purchase->id);
+        $response = $this->actingAs($seller)->get('/transaction/'.$purchase->id);
 
         $response->assertViewHas('showRatingModal', false);
     }
@@ -208,7 +208,7 @@ class TransactionRatingTest extends TestCase
         Mail::fake();
         ['buyer' => $buyer, 'purchase' => $purchase] = $this->createTransaction();
 
-        $response = $this->actingAs($buyer)->post('/transaction/' . $purchase->id . '/complete', [
+        $response = $this->actingAs($buyer)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 5,
         ]);
 
@@ -273,7 +273,7 @@ class TransactionRatingTest extends TestCase
         ['purchase' => $purchase] = $this->createTransaction();
         $otherUser = User::factory()->create(['email_verified_at' => now()]);
 
-        $response = $this->actingAs($otherUser)->post('/transaction/' . $purchase->id . '/complete', [
+        $response = $this->actingAs($otherUser)->post('/transaction/'.$purchase->id.'/complete', [
             'rating' => 5,
         ]);
 
